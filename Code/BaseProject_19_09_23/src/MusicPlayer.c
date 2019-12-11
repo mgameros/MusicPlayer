@@ -44,7 +44,8 @@ enum commands {
 	PlaySong,
 	FindSong,
 	PauseSong,
-	StopSong
+	StopSong,
+	SongComplete
 };
 
 // These are the states that the system can be in, all processed by the Process_Event function.
@@ -80,6 +81,7 @@ typedef struct WAVHEADER {
 
 // Global variables that need to be accessed by more than one function
 char fileName[256];
+char null[2]={0,0};
 bool wait;
 bool stop;
 
@@ -144,6 +146,7 @@ void Process_Event (uint16_t event)
 				// Exit actions
 				// Transition actions
 				// SongPlaying entry actions
+				osMessagePut(mid_FSQueue,PlaySong,osWaitForever);
 			}
 			// Switches to the Refreshing state
 			else if(event == ShowFiles)
@@ -171,6 +174,14 @@ void Process_Event (uint16_t event)
 			}
 			// Switches to the SongSelected state
 			else if(event == StopSong)
+			{
+				// Next State
+				Current_State = SongSelected;
+				// Exit actions
+				// Transition actions
+				// SongSelected entry actions
+			}
+			else if(event == SongComplete)
 			{
 				// Next State
 				Current_State = SongSelected;
@@ -247,6 +258,8 @@ void Init_Thread (void) {
 	// Create semaphore
 	SEM0_id = osSemaphoreCreate(osSemaphore(SEM0),0);
 	SEM1_id = osSemaphoreCreate(osSemaphore(SEM1),0);
+	
+	strcpy(fileName,null);
 }
 
 // Controls the communication between the board and the UI
@@ -269,6 +282,7 @@ void Control (void const *argument)
 void Rx_Command (void const *argument)
 {
 	char rx_char[2]={0,0};
+	char name[2]={0,0};
 	while(1) {
 		UART_receive(rx_char,1);
 		
@@ -278,6 +292,13 @@ void Rx_Command (void const *argument)
 		}
 		if(!strcmp(rx_char,PlaySong_char)) 
 		{
+			UART_receive(name,1);
+			
+			while(name[0] != '\0')
+			{
+				strcat(fileName,name);
+				UART_receive(name,1);
+			}
 			osMessagePut(mid_CMDQueue,PlaySong,osWaitForever);
 		}
 		if(!strcmp(rx_char,PauseSong_char)) 
@@ -302,6 +323,10 @@ void FS_Thread(void const *arg)
 	char *drive_name = "U0:"; // USB drive name
 	fsStatus fstatus; // file system status variable
 	static FILE *f;
+	static uint8_t rtrn = 0;
+	size_t read;
+	int count = 0;
+	WAVHEADER header;
 	char *StartFileList_msg = "5\n";
 	char *EndFileList_msg = "6\n";
 	
@@ -342,8 +367,74 @@ void FS_Thread(void const *arg)
 				UART_send(EndFileList_msg,2); // Send start string
 				osMessagePut(mid_CMDQueue,SendComplete,osWaitForever);
 				}
+				if(evt.value.v == PlaySong) {
+					f = fopen (fileName,"r");// open a file on the USB device
+					if (f != NULL) {
+						fread((void *)&header, sizeof(header), 1, f);
+						
+						rtrn = BSP_AUDIO_OUT_Init(OUTPUT_DEVICE_AUTO, 0x46, 44100);
+						if (rtrn != AUDIO_OK)return;
+						
+						read = fread((void *)Audio_Buffer,sizeof(Audio_Buffer),1,f);
+						BSP_AUDIO_OUT_Play((uint16_t *)Audio_Buffer, BUF_LEN*2);
+						
+						while(read == 1)
+						{
+							if(count ==0)
+							{
+								read = fread((void *)Audio_Buffer2,sizeof(Audio_Buffer2),1,f);
+								
+								osMessagePut(mid_MsgQueue,count,osWaitForever);
+								osSemaphoreWait(SEM0_id, osWaitForever);
+						
+								count = 1;
+							}
+							else if(count ==1)
+							{
+								read = fread((void *)Audio_Buffer,sizeof(Audio_Buffer),1,f);
+								
+								osMessagePut(mid_MsgQueue,count,osWaitForever);
+								osSemaphoreWait(SEM0_id, osWaitForever);
+						
+								count = 0;
+							}
+						}
+						
+						fclose (f); // close the file
+						BSP_AUDIO_OUT_SetMute(AUDIO_MUTE_ON);
+						strcpy(fileName,null);
+						osMessagePut(mid_CMDQueue,SongComplete,osWaitForever);
+					} // end if file opened
+				}
 			}
 		}
 		
 	} // end if USBH_Initialize
+}
+
+/* User Callbacks: user has to implement these functions if they are needed. */
+/* This function is called when the requested data has been completely transferred. */
+void    BSP_AUDIO_OUT_TransferComplete_CallBack(void){
+	osEvent evt = osMessageGet(mid_MsgQueue, 0);
+	
+	if(evt.status == osEventMessage)
+	{
+		osSemaphoreRelease(SEM0_id);
+		
+		if(evt.value.v == 0)
+			BSP_AUDIO_OUT_ChangeBuffer((uint16_t*)Audio_Buffer2, BUF_LEN);
+		else if(evt.value.v == 1)
+			BSP_AUDIO_OUT_ChangeBuffer((uint16_t*)Audio_Buffer, BUF_LEN);
+	}
+}
+
+/* This function is called when half of the requested buffer has been transferred. */
+void    BSP_AUDIO_OUT_HalfTransfer_CallBack(void){
+}
+
+/* This function is called when an Interrupt due to transfer error or peripheral
+   error occurs. */
+void    BSP_AUDIO_OUT_Error_CallBack(void){
+		while(1){
+		}
 }

@@ -87,7 +87,22 @@ Public Class Form1
     End Sub
 
     Private Sub PlayButton_Click(sender As Object, e As EventArgs) Handles PlayButton.Click
+        Dim b(1) As Byte
+        b(0) = 0
+        Dim file As String
+        Dim i As Integer = 0
+        ' A value of negative one (-1) is returned if no item is selected
+        If Not (File_List.SelectedIndex = -1) Then
+            SerialPort1.Write(PlaySongStr, 0, 1)
+            file = File_List.SelectedItem
 
+            While (i < file.Length)
+                SerialPort1.Write(file(i))
+                i = i + 1
+            End While
+
+            SerialPort1.Write(b, 0, 1) ' New Line character at the end of the string
+        End If
     End Sub
 
     Private Sub PauseButton_Click(sender As Object, e As EventArgs) Handles PauseButton.Click
