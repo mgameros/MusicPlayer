@@ -388,9 +388,9 @@
               <FilePath>.\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>Thread.c</FileName>
+              <FileName>MusicPlayer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\Thread.c</FilePath>
+              <FilePath>.\src\MusicPlayer.c</FilePath>
             </File>
           </Files>
         </Group>

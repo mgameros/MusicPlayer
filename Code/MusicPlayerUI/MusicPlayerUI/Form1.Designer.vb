@@ -22,18 +22,20 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.PlayButton = New System.Windows.Forms.Button()
         Me.PauseButton = New System.Windows.Forms.Button()
         Me.StopButton = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.SongPlaying = New System.Windows.Forms.Label()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.File_List = New System.Windows.Forms.ListBox()
         Me.RefreshButton = New System.Windows.Forms.Button()
+        Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.SuspendLayout()
         '
         'PlayButton
         '
-        Me.PlayButton.Location = New System.Drawing.Point(282, 12)
+        Me.PlayButton.Location = New System.Drawing.Point(278, 12)
         Me.PlayButton.Name = "PlayButton"
         Me.PlayButton.Size = New System.Drawing.Size(49, 27)
         Me.PlayButton.TabIndex = 0
@@ -42,9 +44,9 @@ Partial Class Form1
         '
         'PauseButton
         '
-        Me.PauseButton.Location = New System.Drawing.Point(337, 12)
+        Me.PauseButton.Location = New System.Drawing.Point(333, 12)
         Me.PauseButton.Name = "PauseButton"
-        Me.PauseButton.Size = New System.Drawing.Size(59, 27)
+        Me.PauseButton.Size = New System.Drawing.Size(63, 27)
         Me.PauseButton.TabIndex = 1
         Me.PauseButton.Text = "Pause"
         Me.PauseButton.UseVisualStyleBackColor = True
@@ -76,14 +78,14 @@ Partial Class Form1
         Me.SongPlaying.TabIndex = 4
         Me.SongPlaying.Text = "Label2"
         '
-        'ListBox1
+        'File_List
         '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 16
-        Me.ListBox1.Location = New System.Drawing.Point(12, 45)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(438, 276)
-        Me.ListBox1.TabIndex = 5
+        Me.File_List.FormattingEnabled = True
+        Me.File_List.ItemHeight = 16
+        Me.File_List.Location = New System.Drawing.Point(12, 45)
+        Me.File_List.Name = "File_List"
+        Me.File_List.Size = New System.Drawing.Size(438, 276)
+        Me.File_List.TabIndex = 5
         '
         'RefreshButton
         '
@@ -94,13 +96,17 @@ Partial Class Form1
         Me.RefreshButton.Text = "Refresh"
         Me.RefreshButton.UseVisualStyleBackColor = True
         '
+        'SerialPort1
+        '
+        Me.SerialPort1.PortName = "COM5"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(462, 363)
         Me.Controls.Add(Me.RefreshButton)
-        Me.Controls.Add(Me.ListBox1)
+        Me.Controls.Add(Me.File_List)
         Me.Controls.Add(Me.SongPlaying)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.StopButton)
@@ -118,6 +124,7 @@ Partial Class Form1
     Friend WithEvents StopButton As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents SongPlaying As Label
-    Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents File_List As ListBox
     Friend WithEvents RefreshButton As Button
+    Friend WithEvents SerialPort1 As IO.Ports.SerialPort
 End Class

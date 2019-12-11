@@ -1,0 +1,11 @@
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\bin\Debug\MusicPlayerUI.exe.config
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\bin\Debug\MusicPlayerUI.exe
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\bin\Debug\MusicPlayerUI.pdb
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\bin\Debug\MusicPlayerUI.xml
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.vbprojAssemblyReference.cache
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.Form1.resources
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.Resources.resources
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.vbproj.GenerateResource.cache
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.exe
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.xml
+C:\Users\McKenna Gameros\Documents\School\2019FA\SERTS\MusicPlayer\Code\MusicPlayerUI\MusicPlayerUI\obj\Debug\MusicPlayerUI.pdb
