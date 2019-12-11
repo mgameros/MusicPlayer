@@ -96,6 +96,12 @@ osMessageQDef (CMDQueue, 1, uint32_t); // message queue object
 osMessageQId mid_FSQueue; // message queue for commands to Thread
 osMessageQDef (FSQueue, 1, uint32_t); // message queue object
 
+osMessageQId mid_PauseQueue; // message queue for commands to Thread
+osMessageQDef (PauseQueue, 1, uint32_t); // message queue object
+
+osMessageQId mid_PlayQueue; // message queue for commands to Thread
+osMessageQDef (PlayQueue, 1, uint32_t); // message queue object
+
 #define MSGQUEUE_OBJECTS    1                 // number of Message Queue Objects
 
 osMessageQId mid_MsgQueue;                     // message queue id
@@ -121,6 +127,8 @@ void Process_Event (uint16_t event)
 {
 	osEvent evt;
 	char fileName[256];
+	char *PlaySong_msg = "7\n";
+	char *Stop_msg = "7\n";
 	static uint16_t		Current_State = NoState;
 	switch(Current_State) {
 		
@@ -146,6 +154,9 @@ void Process_Event (uint16_t event)
 				// Exit actions
 				// Transition actions
 				// SongPlaying entry actions
+				UART_send(PlaySong_msg,2);
+				UART_send(fileName,strlen(fileName));
+				UART_send("\n",1); // this is the VB string terminator "\n"	
 				osMessagePut(mid_FSQueue,PlaySong,osWaitForever);
 			}
 			// Switches to the Refreshing state
@@ -171,6 +182,7 @@ void Process_Event (uint16_t event)
 				// Exit actions
 				// Transition actions
 				// SongPaused entry actions
+				osMessagePut(mid_PauseQueue,PauseSong,osWaitForever);
 			}
 			// Switches to the SongSelected state
 			else if(event == StopSong)
@@ -180,6 +192,8 @@ void Process_Event (uint16_t event)
 				// Exit actions
 				// Transition actions
 				// SongSelected entry actions
+				osMessagePut(mid_PauseQueue,StopSong,osWaitForever);
+				evt = osMessageGet(mid_PlayQueue,osWaitForever);
 			}
 			else if(event == SongComplete)
 			{
@@ -203,6 +217,7 @@ void Process_Event (uint16_t event)
 				// Exit actions
 				// Transition actions
 				// SongPlaying entry actions
+				osMessagePut(mid_PauseQueue,PlaySong,osWaitForever);
 			}
 			// Switches to the SongSelected state
 			else if(event == StopSong)
@@ -242,6 +257,10 @@ void Init_Thread (void) {
   if (!mid_CMDQueue)return; // Message Queue object not created, handle failure
 	mid_FSQueue = osMessageCreate (osMessageQ(FSQueue), NULL);  // create msg queue
   if (!mid_FSQueue)return; // Message Queue object not created, handle failure
+	mid_PauseQueue = osMessageCreate (osMessageQ(PauseQueue), NULL);  // create msg queue
+  if (!mid_PauseQueue)return; // Message Queue object not created, handle failure
+	mid_PlayQueue = osMessageCreate (osMessageQ(PlayQueue), NULL);  // create msg queue
+  if (!mid_PlayQueue)return; // Message Queue object not created, handle failure
   
 	// Create threads
    tid_RX_Command = osThreadCreate (osThread(Rx_Command), NULL);
@@ -397,6 +416,30 @@ void FS_Thread(void const *arg)
 								osSemaphoreWait(SEM0_id, osWaitForever);
 						
 								count = 0;
+							}
+							
+							evt = osMessageGet(mid_PauseQueue,0);
+							if(evt.status == osEventMessage)
+							{
+								if(evt.value.v == PauseSong)
+								{
+									BSP_AUDIO_OUT_SetMute(AUDIO_MUTE_ON);
+									evt = osMessageGet(mid_PauseQueue,osWaitForever);
+										if(evt.status == osEventMessage)
+										{
+											if(evt.value.v == PlaySong)
+											{
+												BSP_AUDIO_OUT_SetMute(AUDIO_MUTE_OFF);
+											}
+										}
+								}
+								else if(evt.value.v == StopSong)
+								{
+									fclose (f); // close the file
+									BSP_AUDIO_OUT_SetMute(AUDIO_MUTE_ON);
+									strcpy(fileName,null);
+									osMessagePut(mid_PlayQueue,StopSong,osWaitForever);
+								}
 							}
 						}
 						

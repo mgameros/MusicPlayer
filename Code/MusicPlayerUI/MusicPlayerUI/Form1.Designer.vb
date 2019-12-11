@@ -74,9 +74,8 @@ Partial Class Form1
         Me.SongPlaying.AutoSize = True
         Me.SongPlaying.Location = New System.Drawing.Point(134, 21)
         Me.SongPlaying.Name = "SongPlaying"
-        Me.SongPlaying.Size = New System.Drawing.Size(51, 17)
+        Me.SongPlaying.Size = New System.Drawing.Size(0, 17)
         Me.SongPlaying.TabIndex = 4
-        Me.SongPlaying.Text = "Label2"
         '
         'File_List
         '

@@ -2,6 +2,10 @@
 Public Class Form1
     Delegate Sub ListBoxDelegate(ByVal command As Integer, ByVal myStr As String)
     Dim ListBoxDel As New ListBoxDelegate(AddressOf ListBoxDelMethod)
+    Dim ListBoxSelect As New ListBoxDelegate(AddressOf ListBoxSelectMethod)
+    Dim ListBoxClear As New ListBoxDelegate(AddressOf ListBoxClearMethod)
+
+
 
     Dim PC_Comm As New Thread(AddressOf PC_Comm_method)
     Dim ShowFiles As Integer = 1
@@ -14,9 +18,12 @@ Public Class Form1
     Dim ShowFilesStr As String = "1"
     Dim PlaySongStr As String = "2"
     Dim PauseSongStr As String = "3"
-    Dim StopSongStr As Integer = "4"
-    Dim StartFileListStr As Integer = "5"
-    Dim EndFileListStr As Integer = "6"
+    Dim StopSongStr As String = "4"
+    Dim StartFileListStr As String = "5"
+    Dim EndFileListStr As String = "6"
+    Dim StopStr As String = "7"
+
+    Dim Files As Integer = 0
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Try to open the seial port 
@@ -46,6 +53,17 @@ Public Class Form1
             File_List.Items.Add(myStr)
         End If
     End Sub
+
+    Public Sub ListBoxSelectMethod(ByVal command As Integer, ByVal myStr As String)
+        Randomize()
+        Dim value As Integer = CInt(Int((Files * Rnd()) + 1))
+        File_List.SetSelected(value, True)
+    End Sub
+
+    Public Sub ListBoxClearMethod(ByVal command As Integer, ByVal myStr As String)
+        File_List.ClearSelected()
+    End Sub
+
     ' Thread that monitors the receive items on the serial port
     Private Sub PC_Comm_method()
         Dim str As String
@@ -61,6 +79,7 @@ Public Class Form1
                 'Zero" strA occurs in the same position as strB in the sort order.
                 'Greater than zero: strA follows strB in the sort order.
                 If Not String.Compare(str, StartFileListStr) Then
+                    Files = 0
                     ' Received a StartFileList response
                     ' clear the list
                     ' Use the delegate to access the ListBox
@@ -77,9 +96,13 @@ Public Class Form1
                             str = SerialPort1.ReadLine() ' read file name
                         Catch ex As Exception
                         End Try
+                        Files = Files + 1
                     End While
-                    ' While loop ends when a 3 is received
+
+                    File_List.Invoke(ListBoxSelect, EndFileList, str)
                 End If
+                ' While loop ends when a 3 is received
+
             Else
                 Threading.Thread.Sleep(500)
             End If
@@ -102,15 +125,27 @@ Public Class Form1
             End While
 
             SerialPort1.Write(b, 0, 1) ' New Line character at the end of the string
+
+            SongPlaying.Text = file
         End If
     End Sub
 
     Private Sub PauseButton_Click(sender As Object, e As EventArgs) Handles PauseButton.Click
-
+        If SerialPort1.IsOpen Then
+            ' Send Show_Files command
+            SerialPort1.Write(PauseSongStr, 0, 1)
+        End If
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        If SerialPort1.IsOpen Then
+            ' Send Show_Files command
+            SerialPort1.Write(StopSongStr, 0, 1)
+        End If
 
+        File_List.Invoke(ListBoxClear, EndFileList, "")
+
+        File_List.Invoke(ListBoxSelect, EndFileList, "")
     End Sub
 
     Private Sub RefreshButton_Click(sender As Object, e As EventArgs) Handles RefreshButton.Click
@@ -119,4 +154,5 @@ Public Class Form1
             SerialPort1.Write(ShowFilesStr, 0, 1)
         End If
     End Sub
+
 End Class
