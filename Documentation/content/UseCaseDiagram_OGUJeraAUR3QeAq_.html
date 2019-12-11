@@ -1,0 +1,458 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Use Case Diagram - Use Case Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Use Case Diagram - Use Case Diagram		</span>
+<a onclick="javascript: showVpLink('Project Diagrams.vpp://diagram/OGUJeraAUR3QeAq_', 'Use Case Diagram\nProject Diagrams.vpp://diagram/OGUJeraAUR3QeAq_', 'Use Case Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|125.0|2.0|125.0|402.0|System_WNFJeraAUR3QeArS.html|System_WNFJeraAUR3QeArS.html|GNFJeraAUR3QeArR" id="optionGNFJeraAUR3QeArR">Music Playing : System</option>
+<option value="shape|9.0|175.0|30.0|60.0|Actor_XjYzFraAUR3QeAhD.html|Actor_XjYzFraAUR3QeAhD.html|HjYzFraAUR3QeAhC" id="optionHjYzFraAUR3QeAhC">User : Actor</option>
+<option value="shape|336.0|173.0|30.0|60.0|Actor_6ySzFraAUR3QeAiS.html|Actor_6ySzFraAUR3QeAiS.html|6ySzFraAUR3QeAiR" id="option6ySzFraAUR3QeAiR">USB Drive : Actor</option>
+<option value="shape|151.0|30.0|80.0|40.0|UseCase_Av1JeraAUR3QeArd.html|UseCase_Av1JeraAUR3QeArd.html|XP1JeraAUR3QeArc" id="optionXP1JeraAUR3QeArc">Play Music : Use Case</option>
+<option value="shape|151.0|94.0|80.0|40.0|UseCase_hHdJeraAUR3QeAr2.html|UseCase_hHdJeraAUR3QeAr2.html|hHdJeraAUR3QeAr1" id="optionhHdJeraAUR3QeAr1">Pause Music : Use Case</option>
+<option value="shape|150.0|222.0|80.0|40.0|UseCase_o_TJeraAUR3QeAsV.html|UseCase_o_TJeraAUR3QeAsV.html|o.TJeraAUR3QeAsU" id="optiono.TJeraAUR3QeAsU">Stop Music : Use Case</option>
+<option value="shape|149.0|158.0|83.0|40.0|UseCase_cjtTFraAUR3QeAfX.html|UseCase_cjtTFraAUR3QeAfX.html|cjtTFraAUR3QeAfW" id="optioncjtTFraAUR3QeAfW">Resume Music : Use Case</option>
+<option value="shape|150.0|286.0|80.0|40.0|UseCase_4hQzFraAUR3QeAgj.html|UseCase_4hQzFraAUR3QeAgj.html|4hQzFraAUR3QeAgi" id="option4hQzFraAUR3QeAgi">Switch Song : Use Case</option>
+<option value="shape|150.0|350.0|80.0|40.0|UseCase_CoUHFraAUR3QeAtB.html|UseCase_CoUHFraAUR3QeAtB.html|CoUHFraAUR3QeAtA" id="optionCoUHFraAUR3QeAtA">Change Song : Use Case</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Use_Case_Diagram.png" usemap="#diagram_map" class="Image" width="391" height="408"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="151.0, 57.49618, 39.0, 193.43512, 39.0, 215.78625, 159.1132, 70.0, 151.0, 70.0, 151.0, 57.49618" coords2="151.0, 57.49618, 39.0, 193.43512, 39.0, 215.78625, 159.1132, 70.0, 151.0, 70.0, 151.0, 57.49618" shape="poly" alt=":Association" id="areadiagram_map_x3EzFraAUR3QeAhN_default" href="Association_8bEzFraAUR3QeAhI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="151.0, 125.25548, 39.0, 196.37956, 39.0, 196.37956, 39.0, 212.45985, 162.55173, 134.0, 151.0, 134.0, 151.0, 125.25548" coords2="151.0, 125.25548, 39.0, 196.37956, 39.0, 196.37956, 39.0, 212.45985, 162.55173, 134.0, 151.0, 134.0, 151.0, 125.25548" shape="poly" alt=":Association" id="areadiagram_map_6IUzFraAUR3QeAhZ_default" href="Association_cQUzFraAUR3QeAhU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="149.0, 191.03226, 39.0, 197.41936, 39.0, 197.41936, 39.0, 211.41936, 39.0, 211.41936, 184.0, 203.0, 184.0, 198.0, 149.0, 198.0, 149.0, 191.03226" coords2="149.0, 191.03226, 39.0, 197.41936, 39.0, 197.41936, 39.0, 211.41936, 39.0, 211.41936, 184.0, 203.0, 184.0, 198.0, 149.0, 198.0, 149.0, 191.03226" shape="poly" alt=":Association" id="areadiagram_map_250zFraAUR3QeAhh_default" href="Association_cJ0zFraAUR3QeAhc.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="39.0, 197.2517, 39.0, 211.56462, 39.0, 211.56462, 150.0, 228.93198, 150.0, 228.93198, 150.0, 222.0, 177.57143, 222.0, 178.0, 219.0, 39.0, 197.2517" coords2="39.0, 197.2517, 39.0, 211.56462, 39.0, 211.56462, 150.0, 228.93198, 150.0, 228.93198, 150.0, 222.0, 177.57143, 222.0, 178.0, 219.0, 39.0, 197.2517" shape="poly" alt=":Association" id="areadiagram_map_6BMzFraAUR3QeAhp_default" href="Association_8eMzFraAUR3QeAhk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="39.0, 196.9037, 39.0, 213.7111, 39.0, 213.7111, 150.0, 294.28888, 150.0, 294.28888, 150.0, 286.0, 161.7347, 286.0, 39.0, 196.9037" coords2="39.0, 196.9037, 39.0, 213.7111, 39.0, 213.7111, 150.0, 294.28888, 150.0, 294.28888, 150.0, 286.0, 161.7347, 286.0, 39.0, 196.9037" shape="poly" alt=":Association" id="areadiagram_map_9QizFraAUR3QeAiL_default" href="Association_C_CzFraAUR3QeAiG.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="39.0, 193.0, 39.0, 215.52344, 150.0, 362.07812, 150.0, 350.0, 157.91124, 350.0, 39.0, 193.0" coords2="39.0, 193.0, 39.0, 215.52344, 150.0, 362.07812, 150.0, 350.0, 157.91124, 350.0, 39.0, 193.0" shape="poly" alt=":Association" id="areadiagram_map_ZLcHFraAUR3QeAte_default" href="Association_BtcHFraAUR3QeAtZ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user has selected another song and pressed play while another song 
+      is playing. The system stops the current song, finds the selected song 
+      in the USB drive, and plays it. The play button is disabled.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="150, 350, 230, 390" coords2="150, 350, 230, 390" shape="rect" alt="Change Song:Use Case" id="areadiagram_map_CoUHFraAUR3QeAtA_default" href="UseCase_CoUHFraAUR3QeAtB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="336, 173, 366, 233" coords2="336, 173, 366, 233" shape="rect" alt="USB Drive:Actor" id="areadiagram_map_6ySzFraAUR3QeAiR_default" href="Actor_6ySzFraAUR3QeAiS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="9, 175, 39, 235" coords2="9, 175, 39, 235" shape="rect" alt="User:Actor" id="areadiagram_map_HjYzFraAUR3QeAhC_default" href="Actor_XjYzFraAUR3QeAhD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user chooses a different song while another song is playing. The 
+      system enables the play button.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="150, 286, 230, 326" coords2="150, 286, 230, 326" shape="rect" alt="Switch Song:Use Case" id="areadiagram_map_4hQzFraAUR3QeAgi_default" href="UseCase_4hQzFraAUR3QeAgj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user presses the play button to resume the music that was currently 
+      playing. The system finds where the song had been playing and resumes 
+      playing. The play button is disabled and the pause button is enabled.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="149, 158, 232, 198" coords2="149, 158, 232, 198" shape="rect" alt="Resume Music:Use Case" id="areadiagram_map_cjtTFraAUR3QeAfW_default" href="UseCase_cjtTFraAUR3QeAfX.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user presses the stop button. The system stops the music and does 
+      not make note of where the song was. The play button is enabled and the 
+      pause and stop buttons are disabled.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="150, 222, 230, 262" coords2="150, 222, 230, 262" shape="rect" alt="Stop Music:Use Case" id="areadiagram_map_o.TJeraAUR3QeAsU_default" href="UseCase_o_TJeraAUR3QeAsV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user presses the pause button. The system pauses the currently 
+      playing music, enables the play button, and disables the pause button. 
+      It also makes note of how far along the current song was.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="151, 94, 231, 134" coords2="151, 94, 231, 134" shape="rect" alt="Pause Music:Use Case" id="areadiagram_map_hHdJeraAUR3QeAr1_default" href="UseCase_hHdJeraAUR3QeAr2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" docContent="&amp;lt;head&amp;gt;
+    
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body style=&amp;quot;margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;&amp;quot;&amp;gt;
+    &amp;lt;p style=&amp;quot;margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;&amp;quot;&amp;gt;
+      The user selects a song and presses the play button. The system plays 
+      the song, enables the pause button, and disables the play button.
+    &amp;lt;/p&amp;gt;
+  &amp;lt;/body&amp;gt;" coords="151, 30, 231, 70" coords2="151, 30, 231, 70" shape="rect" alt="Play Music:Use Case" id="areadiagram_map_XP1JeraAUR3QeArc_default" href="UseCase_Av1JeraAUR3QeArd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),showTooltip(this)" onmousedown="clearSpotLight();" onmouseout="hideTooltip()"/>
+<area imageId="diagram" coords="125, 2, 250, 404" coords2="125, 2, 250, 404" shape="rect" alt="Music Playing:System" id="areadiagram_map_GNFJeraAUR3QeArR_default" href="System_WNFJeraAUR3QeArS.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/System.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/System.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="System_WNFJeraAUR3QeArS.html" class="ItemLink">Music Playing : System</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Actor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Actor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Actor_XjYzFraAUR3QeAhD.html" class="ItemLink">User : Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Actor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Actor.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Actor_6ySzFraAUR3QeAiS.html" class="ItemLink">USB Drive : Actor</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_Av1JeraAUR3QeArd.html" class="ItemLink">Play Music : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user selects a song and presses the play button. The system plays 
+      the song, enables the pause button, and disables the play button.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_hHdJeraAUR3QeAr2.html" class="ItemLink">Pause Music : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user presses the pause button. The system pauses the currently 
+      playing music, enables the play button, and disables the pause button. 
+      It also makes note of how far along the current song was.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_o_TJeraAUR3QeAsV.html" class="ItemLink">Stop Music : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user presses the stop button. The system stops the music and does 
+      not make note of where the song was. The play button is enabled and the 
+      pause and stop buttons are disabled.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_cjtTFraAUR3QeAfX.html" class="ItemLink">Resume Music : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user presses the play button to resume the music that was currently 
+      playing. The system finds where the song had been playing and resumes 
+      playing. The play button is disabled and the pause button is enabled.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_4hQzFraAUR3QeAgj.html" class="ItemLink">Switch Song : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user chooses a different song while another song is playing. The 
+      system enables the play button.
+    </p>
+  </body></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/UseCase.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/UseCase.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="UseCase_CoUHFraAUR3QeAtB.html" class="ItemLink">Change Song : Use Case</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"><head>
+    
+  </head>
+  <body style="margin-right:0;color:#000000;font-weight:normal;font-size:12px;font-family:Dialog;margin-left:0;">
+    <p style="margin-right:0pt;margin-top:0pt;margin-bottom:.0001pt;margin-left:0pt;">
+      The user has selected another song and pressed play while another song 
+      is playing. The system stops the current song, finds the selected song 
+      in the USB drive, and plays it. The play button is disabled.
+    </p>
+  </body></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+</body>
+</html>

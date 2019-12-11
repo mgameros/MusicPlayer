@@ -1,0 +1,272 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Block Definition Diagram - System Context Diagram</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Block Definition Diagram - System Context Diagram		</span>
+<a onclick="javascript: showVpLink('Project Diagrams.vpp://diagram/8gD4QraAUR3QeAkC', 'System Context Diagram\nProject Diagrams.vpp://diagram/8gD4QraAUR3QeAkC', 'System Context Diagram', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|203.0|215.0|100.0|47.0|SysMLBlock_TUFNxraAUR3QeAp2.html|SysMLBlock_TUFNxraAUR3QeAp2.html|TUFNxraAUR3QeAp1" id="optionTUFNxraAUR3QeAp1">User : Block</option>
+<option value="shape|391.0|51.0|144.0|46.0|SysMLBlock_W_uNxraAUR3QeApj.html|SysMLBlock_W_uNxraAUR3QeApj.html|m_uNxraAUR3QeApi" id="optionm_uNxraAUR3QeApi">Speaker : Block</option>
+<option value="shape|2.0|51.0|113.0|46.0|SysMLBlock_jEKNxraAUR3QeApJ.html|SysMLBlock_jEKNxraAUR3QeApJ.html|jEKNxraAUR3QeApI" id="optionjEKNxraAUR3QeApI">PC GUI : Block</option>
+<option value="shape|190.0|2.0|126.0|144.0|SysMLBlock_mpDlxraAUR3QeAi8.html|SysMLBlock_mpDlxraAUR3QeAi8.html|yVb4QraAUR3QeAkQ" id="optionyVb4QraAUR3QeAkQ">Music Player : Block</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/System_Context_Diagram.png" usemap="#diagram_map" class="Image" width="539" height="266"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="115.0, 65.0, 115.0, 79.0, 190.0, 79.0, 190.0, 65.0" coords2="115.0, 65.0, 115.0, 79.0, 190.0, 79.0, 190.0, 65.0" shape="poly" alt="inputs to:Association" id="areadiagram_map_ldtNxraAUR3QeAqO_default" href="Association_lutNxraAUR3QeAqJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="316.0, 73.0, 316.0, 87.0, 391.0, 87.0, 391.0, 73.0" coords2="316.0, 73.0, 316.0, 87.0, 391.0, 87.0, 391.0, 73.0" shape="poly" alt="outputs to:Association" id="areadiagram_map_NFjNxraAUR3QeAqo_default" href="Association_EWjNxraAUR3QeAqj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="456.0, 97.0, 456.0, 161.0, 295.0, 161.0, 295.0, 158.0, 281.0, 158.0, 281.0, 161.0, 278.0, 161.0, 278.0, 175.0, 281.0, 175.0, 281.0, 215.0, 295.0, 215.0, 295.0, 175.0, 456.0, 175.0, 456.0, 178.0, 470.0, 178.0, 470.0, 175.0, 473.0, 175.0, 473.0, 161.0, 470.0, 161.0, 470.0, 97.0" coords2="456.0, 97.0, 456.0, 161.0, 295.0, 161.0, 295.0, 158.0, 281.0, 158.0, 281.0, 161.0, 278.0, 161.0, 278.0, 175.0, 281.0, 175.0, 281.0, 215.0, 295.0, 215.0, 295.0, 175.0, 456.0, 175.0, 456.0, 178.0, 470.0, 178.0, 470.0, 175.0, 473.0, 175.0, 473.0, 161.0, 470.0, 161.0, 470.0, 97.0" shape="poly" alt="observes:Association" id="areadiagram_map_UlrNxraAUR3QeAq4_default" href="Association_wKrNxraAUR3QeAqz.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="51.0, 97.0, 51.0, 161.0, 48.0, 161.0, 48.0, 175.0, 51.0, 175.0, 51.0, 178.0, 65.0, 178.0, 65.0, 175.0, 206.0, 175.0, 206.0, 215.0, 220.0, 215.0, 220.0, 175.0, 223.0, 175.0, 223.0, 161.0, 220.0, 161.0, 220.0, 158.0, 206.0, 158.0, 206.0, 161.0, 65.0, 161.0, 65.0, 97.0" coords2="51.0, 97.0, 51.0, 161.0, 48.0, 161.0, 48.0, 175.0, 51.0, 175.0, 51.0, 178.0, 65.0, 178.0, 65.0, 175.0, 206.0, 175.0, 206.0, 215.0, 220.0, 215.0, 220.0, 175.0, 223.0, 175.0, 223.0, 161.0, 220.0, 161.0, 220.0, 158.0, 206.0, 158.0, 206.0, 161.0, 65.0, 161.0, 65.0, 97.0" shape="poly" alt="controls:Association" id="areadiagram_map_AqHNxraAUR3QeArG_default" href="Association_gAHNxraAUR3QeArB.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="203, 215, 303, 262" coords2="203, 215, 303, 262" shape="rect" alt="User:Block" id="areadiagram_map_TUFNxraAUR3QeAp1_default" href="SysMLBlock_TUFNxraAUR3QeAp2.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="391, 51, 535, 97" coords2="391, 51, 535, 97" shape="rect" alt="Speaker:Block" id="areadiagram_map_m_uNxraAUR3QeApi_default" href="SysMLBlock_W_uNxraAUR3QeApj.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 51, 115, 97" coords2="2, 51, 115, 97" shape="rect" alt="PC GUI:Block" id="areadiagram_map_jEKNxraAUR3QeApI_default" href="SysMLBlock_jEKNxraAUR3QeApJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="190, 2, 316, 146" coords2="190, 2, 316, 146" shape="rect" alt="Music Player:Block" id="areadiagram_map_yVb4QraAUR3QeAkQ_default" href="SysMLBlock_mpDlxraAUR3QeAi8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_TUFNxraAUR3QeAp2.html" class="ItemLink">User : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_W_uNxraAUR3QeApj.html" class="ItemLink">Speaker : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_jEKNxraAUR3QeApJ.html" class="ItemLink">PC GUI : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_mpDlxraAUR3QeAi8.html" class="ItemLink">Music Player : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Block Definition Diagram - Conceptual Structural Model</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Block Definition Diagram - Conceptual Structural Model		</span>
+<a onclick="javascript: showVpLink('Project Diagrams.vpp://diagram/7leFxraAUR3QeAfp', 'Conceptual Structural Model\nProject Diagrams.vpp://diagram/7leFxraAUR3QeAfp', 'Conceptual Structural Model', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|493.0|130.0|102.0|46.0|SysMLBlock__Jo1xraAUR3QeAlD.html|SysMLBlock__Jo1xraAUR3QeAlD.html|_Jo1xraAUR3QeAlC" id="option_Jo1xraAUR3QeAlC">GUI : Block</option>
+<option value="shape|372.0|130.0|95.0|46.0|SysMLBlock_mLw1xraAUR3QeAk7.html|SysMLBlock_mLw1xraAUR3QeAk7.html|mLw1xraAUR3QeAk6" id="optionmLw1xraAUR3QeAk6">Pause Button : Block</option>
+<option value="shape|251.0|130.0|95.0|46.0|SysMLBlock_fDg1xraAUR3QeAk1.html|SysMLBlock_fDg1xraAUR3QeAk1.html|fDg1xraAUR3QeAk0" id="optionfDg1xraAUR3QeAk0">Play Button : Block</option>
+<option value="shape|123.0|130.0|102.0|46.0|SysMLBlock_ljsVxraAUR3QeAja.html|SysMLBlock_ljsVxraAUR3QeAja.html|ljsVxraAUR3QeAjZ" id="optionljsVxraAUR3QeAjZ">CS43L22 : Block</option>
+<option value="shape|2.0|130.0|95.0|46.0|SysMLBlock_GI4VxraAUR3QeAjM.html|SysMLBlock_GI4VxraAUR3QeAjM.html|6I4VxraAUR3QeAjL" id="option6I4VxraAUR3QeAjL">USB Drive : Block</option>
+<option value="shape|235.0|2.0|126.0|45.0|SysMLBlock_mpDlxraAUR3QeAi8.html|SysMLBlock_mpDlxraAUR3QeAi8.html|mpDlxraAUR3QeAi7" id="optionmpDlxraAUR3QeAi7">Music Player : Block</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/Conceptual_Structural_Model.png" usemap="#diagram_map" class="Image" width="599" height="180"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="241.0, 47.0, 241.0, 86.0, 58.0, 86.0, 58.0, 83.0, 44.0, 83.0, 44.0, 86.0, 41.0, 86.0, 41.0, 100.0, 44.0, 100.0, 44.0, 130.0, 58.0, 130.0, 58.0, 100.0, 241.0, 100.0, 241.0, 103.0, 255.0, 103.0, 255.0, 100.0, 258.0, 100.0, 258.0, 86.0, 255.0, 86.0, 255.0, 47.0" coords2="241.0, 47.0, 241.0, 86.0, 58.0, 86.0, 58.0, 83.0, 44.0, 83.0, 44.0, 86.0, 41.0, 86.0, 41.0, 100.0, 44.0, 100.0, 44.0, 130.0, 58.0, 130.0, 58.0, 100.0, 241.0, 100.0, 241.0, 103.0, 255.0, 103.0, 255.0, 100.0, 258.0, 100.0, 258.0, 86.0, 255.0, 86.0, 255.0, 47.0" shape="poly" alt=":Association" id="areadiagram_map_L_h1xraAUR3QeAmQ_default" href="Association_k3h1xraAUR3QeAmL.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="267.0, 47.0, 267.0, 97.0, 181.0, 97.0, 181.0, 94.0, 167.0, 94.0, 167.0, 97.0, 164.0, 97.0, 164.0, 111.0, 167.0, 111.0, 167.0, 130.0, 181.0, 130.0, 181.0, 111.0, 267.0, 111.0, 267.0, 114.0, 281.0, 114.0, 281.0, 111.0, 284.0, 111.0, 284.0, 97.0, 281.0, 97.0, 281.0, 47.0" coords2="267.0, 47.0, 267.0, 97.0, 181.0, 97.0, 181.0, 94.0, 167.0, 94.0, 167.0, 97.0, 164.0, 97.0, 164.0, 111.0, 167.0, 111.0, 167.0, 130.0, 181.0, 130.0, 181.0, 111.0, 267.0, 111.0, 267.0, 114.0, 281.0, 114.0, 281.0, 111.0, 284.0, 111.0, 284.0, 97.0, 281.0, 97.0, 281.0, 47.0" shape="poly" alt=":Association" id="areadiagram_map_WfR1xraAUR3QeAma_default" href="Association_bHR1xraAUR3QeAmV.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="291.0, 47.0, 291.0, 130.0, 305.0, 130.0, 305.0, 47.0" coords2="291.0, 47.0, 291.0, 130.0, 305.0, 130.0, 305.0, 47.0" shape="poly" alt=":Association" id="areadiagram_map_X0J1xraAUR3QeAmm_default" href="Association__4J1xraAUR3QeAmh.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="319.0, 47.0, 319.0, 97.0, 316.0, 97.0, 316.0, 111.0, 319.0, 111.0, 319.0, 114.0, 333.0, 114.0, 333.0, 111.0, 412.0, 111.0, 412.0, 130.0, 426.0, 130.0, 426.0, 111.0, 429.0, 111.0, 429.0, 97.0, 426.0, 97.0, 426.0, 94.0, 412.0, 94.0, 412.0, 97.0, 333.0, 97.0, 333.0, 47.0" coords2="319.0, 47.0, 319.0, 97.0, 316.0, 97.0, 316.0, 111.0, 319.0, 111.0, 319.0, 114.0, 333.0, 114.0, 333.0, 111.0, 412.0, 111.0, 412.0, 130.0, 426.0, 130.0, 426.0, 111.0, 429.0, 111.0, 429.0, 97.0, 426.0, 97.0, 426.0, 94.0, 412.0, 94.0, 412.0, 97.0, 333.0, 97.0, 333.0, 47.0" shape="poly" alt=":Association" id="areadiagram_map_uop1xraAUR3QeAmy_default" href="Association_Qgp1xraAUR3QeAmt.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="341.0, 47.0, 341.0, 86.0, 338.0, 86.0, 338.0, 100.0, 341.0, 100.0, 341.0, 103.0, 355.0, 103.0, 355.0, 100.0, 537.0, 100.0, 537.0, 130.0, 551.0, 130.0, 551.0, 100.0, 554.0, 100.0, 554.0, 86.0, 551.0, 86.0, 551.0, 83.0, 537.0, 83.0, 537.0, 86.0, 355.0, 86.0, 355.0, 47.0" coords2="341.0, 47.0, 341.0, 86.0, 338.0, 86.0, 338.0, 100.0, 341.0, 100.0, 341.0, 103.0, 355.0, 103.0, 355.0, 100.0, 537.0, 100.0, 537.0, 130.0, 551.0, 130.0, 551.0, 100.0, 554.0, 100.0, 554.0, 86.0, 551.0, 86.0, 551.0, 83.0, 537.0, 83.0, 537.0, 86.0, 355.0, 86.0, 355.0, 47.0" shape="poly" alt=":Association" id="areadiagram_map_h7p1xraAUR3QeAm8_default" href="Association_Yzp1xraAUR3QeAm3.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="493, 130, 595, 176" coords2="493, 130, 595, 176" shape="rect" alt="GUI:Block" id="areadiagram_map__Jo1xraAUR3QeAlC_default" href="SysMLBlock__Jo1xraAUR3QeAlD.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="372, 130, 467, 176" coords2="372, 130, 467, 176" shape="rect" alt="Pause Button:Block" id="areadiagram_map_mLw1xraAUR3QeAk6_default" href="SysMLBlock_mLw1xraAUR3QeAk7.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="251, 130, 346, 176" coords2="251, 130, 346, 176" shape="rect" alt="Play Button:Block" id="areadiagram_map_fDg1xraAUR3QeAk0_default" href="SysMLBlock_fDg1xraAUR3QeAk1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="123, 130, 225, 176" coords2="123, 130, 225, 176" shape="rect" alt="CS43L22:Block" id="areadiagram_map_ljsVxraAUR3QeAjZ_default" href="SysMLBlock_ljsVxraAUR3QeAja.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 130, 97, 176" coords2="2, 130, 97, 176" shape="rect" alt="USB Drive:Block" id="areadiagram_map_6I4VxraAUR3QeAjL_default" href="SysMLBlock_GI4VxraAUR3QeAjM.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="235, 2, 361, 47" coords2="235, 2, 361, 47" shape="rect" alt="Music Player:Block" id="areadiagram_map_mpDlxraAUR3QeAi7_default" href="SysMLBlock_mpDlxraAUR3QeAi8.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock__Jo1xraAUR3QeAlD.html" class="ItemLink">GUI : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_mLw1xraAUR3QeAk7.html" class="ItemLink">Pause Button : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_fDg1xraAUR3QeAk1.html" class="ItemLink">Play Button : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_ljsVxraAUR3QeAja.html" class="ItemLink">CS43L22 : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_GI4VxraAUR3QeAjM.html" class="ItemLink">USB Drive : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Block.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Block.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="SysMLBlock_mpDlxraAUR3QeAi8.html" class="ItemLink">Music Player : Block</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		Project Diagrams	</div>
+</body>
+</html>
