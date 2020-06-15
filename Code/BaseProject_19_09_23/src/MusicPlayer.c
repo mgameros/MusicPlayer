@@ -455,6 +455,8 @@ void FS_Thread(void const *arg)
 	} // end if USBH_Initialize
 }
 
+// The following code was provided to me by the professor to play sound from the computer
+
 /* User Callbacks: user has to implement these functions if they are needed. */
 /* This function is called when the requested data has been completely transferred. */
 void    BSP_AUDIO_OUT_TransferComplete_CallBack(void){
